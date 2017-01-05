@@ -10,7 +10,7 @@ describe ("AddTodo",()=> {
   it("should Exist", ()=>{
     expect(AddTodo).toExist();
   });
-  it('should call handleAddTodo if valid text entered',() =>{
+  it('should call onAddTodo if valid text entered',() =>{
     var spy = expect.createSpy();
     var addTodoForm = TestUtils.renderIntoDocument(<AddTodo onAddTodo={spy} />);
     var $el = $(ReactDOM.findDOMNode(addTodoForm));
@@ -21,7 +21,7 @@ describe ("AddTodo",()=> {
     expect(spy).toHaveBeenCalledWith('New Todo for Test');
   });
 
-  it('should not call handleAddTodo if invalid text entered',() =>{
+  it('should not call onAddTodo if invalid text entered',() =>{
     var spy = expect.createSpy();
     var addTodoForm = TestUtils.renderIntoDocument(<AddTodo onAddTodo={spy} />);
     var $el = $(ReactDOM.findDOMNode(addTodoForm));
