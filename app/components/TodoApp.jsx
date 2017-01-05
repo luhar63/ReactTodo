@@ -1,11 +1,14 @@
 var React = require('react');
 var TodoList = require('TodoList');
 var Todo = require('Todo');
-var AddTodo = require('AddTodo')
+var AddTodo = require('AddTodo');
+var TodoSearch = require('TodoSearch');
 
 var TodoApp = React.createClass({
   getInitialState:function () {
     return {
+      showCompleted:false,
+      searchText:"",
       todos:[
       {
         id:1,text:"Walk the Dog"
@@ -19,8 +22,14 @@ var TodoApp = React.createClass({
       {
         id:4,text:"Suicide"
       }
-      ]
+    ]
     };
+  },
+  handleSearch: function (showCompleted,searchText) {
+    this.setState({
+      showCompleted : showCompleted,
+      searchText: searchText.toLowerCase()
+    });
   },
   handleAddTodo: function (text) {
     var {todos} = this.state;
@@ -38,6 +47,7 @@ var TodoApp = React.createClass({
       <div className = "row">
         <h1 className="page-title">Todo Application</h1>
         <div className = "column small-centered medium-6 large-4">
+          <TodoSearch onSearch = {this.handleSearch}/>
           <TodoList todos = {todos} />
           <AddTodo onAddTodo = {this.handleAddTodo} />
         </div>
