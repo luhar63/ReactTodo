@@ -5,9 +5,13 @@ var TodoList = React.createClass({
   render:function (){
     var {todos} = this.props;
     var renderTodos = () =>{
-      return todos.map((todo)=>{
-        return (<Todo key={todo.id} {...todo} onToggle={this.props.onToggle} />);
-      });
+      if(todos.length){
+        return todos.map((todo)=>{
+          return (<Todo key={todo.id} {...todo} onToggle={this.props.onToggle} />);
+        });
+      }else {
+        return (<div>No Todos</div>);
+      }
     };
     return (
       <div>
