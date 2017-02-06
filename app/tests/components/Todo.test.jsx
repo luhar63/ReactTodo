@@ -14,7 +14,9 @@ it("should call onToggle prop with id on click", ()=>{
   var todoData = {
     id:199,
     text: 'Write todo.test test',
-    completed : true
+    completed : true,
+    createdAt:0,
+    completedAt:undefined
   };
   var spy = expect.createSpy();
   var todo = TestUtils.renderIntoDocument(<Todo {...todoData} onToggle={spy} />);
