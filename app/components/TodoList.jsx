@@ -10,7 +10,7 @@ var TodoList = React.createClass({
           return (<Todo key={todo.id} {...todo} onToggle={this.props.onToggle} />);
         });
       }else {
-        return (<div>No Todos</div>);
+        return (<div className="container__message">Nothing to do</div>);
       }
     };
     return (
