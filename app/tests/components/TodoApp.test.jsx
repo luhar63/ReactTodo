@@ -1,64 +1,33 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
+import {Provider} from 'react-redux';
 import expect from 'expect';
 import $ from 'jQuery';
 import TestUtils from 'react-addons-test-utils';
 
+
+var configureStore = require('configureStore');
 var TodoApp = require('TodoApp');
+//var TodoList = require('TodoList');
+import TodoList from 'TodoList';  // it is ConnectedTodoList
 
 describe ("TodoApp",()=> {
   it("should Exist", ()=>{
     expect(TodoApp).toExist();
   });
-  it("should add todo to the todos state on handleAddTodo", ()=>{
-    var todoText = 'test text';
-    var todoApp = TestUtils.renderIntoDocument(<TodoApp />);
 
-    todoApp.setState({todos:[]});
-    todoApp.handleAddTodo(todoText);
+  it("should render TodoList", ()=> {
+    var store = configureStore.configure();
+    var provider = TestUtils.renderIntoDocument(
+      <Provider store={store}>
+        <TodoApp />
+      </Provider>
+    );
 
-    expect(todoApp.state.todos[0].text).toBe(todoText);
-    expect(todoApp.state.todos[0].createdAt).toBeA('number');
-  });
+    var todoApp = TestUtils.scryRenderedComponentsWithType(provider,TodoApp)[0];
+    var todoList = TestUtils.scryRenderedComponentsWithType(todoApp,TodoList);
 
-  it("should toggle  comleteed value when handleToggle  called",()=>{
-    var todoData = {
-      id:11,
-      text: 'Text Features',
-      completed : false,
-      createdAt:0,
-      completedAt:undefined
-    };
-    var todoApp = TestUtils.renderIntoDocument(<TodoApp />);
-    todoApp.setState({todos:[todoData]});
-
-    //check that todos first item has completed value of false
-    expect(todoApp.state.todos[0].completed).toBe(false);
-    //call handleToggle with 11
-    todoApp.handleToggle(11);
-    //verify that value changed
-    expect(todoApp.state.todos[0].completed).toBe(true);
-    expect(todoApp.state.todos[0].completedAt).toBeA('number');
-  });
-
-  it("should toggle  todo from completed to incomplete when handleToggle called",()=>{
-    var todoData = {
-      id:11,
-      text: 'Text Features',
-      completed : true,
-      createdAt:0,
-      completedAt:123,
-    };
-    var todoApp = TestUtils.renderIntoDocument(<TodoApp />);
-    todoApp.setState({todos:[todoData]});
-
-    //check that todos first item has completed value of true
-    expect(todoApp.state.todos[0].completed).toBe(true);
-    //call handleToggle with 11
-    todoApp.handleToggle(11);
-    //verify that value changed
-    expect(todoApp.state.todos[0].completed).toBe(false);
-    expect(todoApp.state.todos[0].completedAt).toNotExist();
+    expect(todoList.length).toEqual(1);
   });
 
 });
