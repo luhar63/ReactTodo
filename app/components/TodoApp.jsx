@@ -10,13 +10,7 @@ import TodoSearch from 'TodoSearch';
 var TodoAPI = require('TodoAPI');
 
 var TodoApp = React.createClass({
-  getInitialState:function () {
-    return {
-      showCompleted:false,
-      searchText:"",
-      todos:TodoAPI.getTodos()
-    };
-  },
+
   // handleToggle: function(id){
   //   var updatedTodos = this.state.todos.map((todo)=>{
   //     if(todo.id==id){
@@ -27,41 +21,17 @@ var TodoApp = React.createClass({
   //   });
   //   this.setState({todos:updatedTodos});
   // },
-  handleSearch: function (showCompleted,searchText) {
-    this.setState({
-      showCompleted : showCompleted,
-      searchText: searchText.toLowerCase()
-    });
-  },
-  componentDidUpdate:function(){
-    TodoAPI.setTodos(this.state.todos);
-  },
-  handleAddTodo: function (text) {
-    this.setState({
-      todos:[
-        ...this.state.todos,
-        {
-          id:uuid(),
-          text:text,
-          completed:false,
-          createdAt:moment().unix(),
-          completedAt:undefined
-        }
-      ]
-    });
-  },
-  render : function() {
-    var {todos,showCompleted, searchText} = this.state;
-    var filterTodos = TodoAPI.filterTodos(todos,showCompleted,searchText);
 
+
+  render : function() {
     return (
       <div className = "row">
         <h1 className="page-title">Todo Application</h1>
         <div className = "column small-centered medium-6 large-4">
           <div className="container">
-            <TodoSearch onSearch = {this.handleSearch}/>
+            <TodoSearch/>
             <TodoList/>
-            <AddTodo onAddTodo = {this.handleAddTodo} />
+            <AddTodo />
           </div>
         </div>
       </div>

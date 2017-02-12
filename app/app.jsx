@@ -8,10 +8,18 @@ var TodoApp = require('TodoApp');
 var actions = require('actions');
 
 var store = require('configureStore').configure();
+var TodoAPI = require('TodoAPI');
 
 store.subscribe(()=>{
-  console.log('New state', store.getState());
+  var stores = store.getState();
+  console.log('New state', stores);
+
+  TodoAPI.setTodos(stores.todos);
 });
+
+var initialTodos = TodoAPI.getTodos();
+console.log(initialTodos);
+store.dispatch(actions.addTodos(initialTodos));
 
 $(document).foundation();
 //load custom css--- App css
